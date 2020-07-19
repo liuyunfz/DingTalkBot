@@ -2,8 +2,11 @@
 import time,hmac,hashlib,base64,urllib.parse,sys,requests,json
 from lxml import etree
 def sent_message(text:str,title:str,picUrl:str,messageUrl:str):
-    token=sys.argv[1]
-    secret = sys.argv[2]
+    try:
+        token=sys.argv[1]
+        secret = sys.argv[2]
+    except:
+        print('secret loss')
     timestamp = str(round(time.time() * 1000))  
     secret_enc = secret.encode('utf-8')
     string_to_sign = '{}\n{}'.format(timestamp, secret)
