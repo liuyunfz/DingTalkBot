@@ -1,4 +1,5 @@
 # DingTalkBot
+代码可用性： ![DingTalk_misson](https://github.com/liuyunfz/DingTalkBot/workflows/DingTalk_misson/badge.svg)
 ## 这是什么
 基于python写的钉钉机器人，通过GitHub Action定时任务实现自动化。
 ## 有什么用
