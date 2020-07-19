@@ -4,16 +4,15 @@
 name: DingTalk_misson
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
+  schedule:
+    - cron: "0 0 0/2 * * ?"
+  watch:
+    types: [started]
 jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    if: github.event.repository.owner.id == github.event.sender.id  # 自己点的 start
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.8
