@@ -33,6 +33,7 @@ def get_message():
     url="https://www.x6d.com/html/34.html"
     rsp=requests.get(url)
     s=etree.HTML(rsp.text)
+    print(rsp.text)
     s=s.xpath("//li[@class='layui-clear']")
     print(len(s))
     urls=[]
