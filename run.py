@@ -63,7 +63,6 @@ if __name__ == "__main__":
             mid_list = mids.split(',')
             for i in mid_list:
                 video_list = get_video(i)
-                print(video_list)
                 for j in video_list:
                     ac_time = int(nowtime) - j['created'] +28800
                     if ac_time<7200 :
