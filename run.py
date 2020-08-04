@@ -38,7 +38,21 @@ if __name__ == "__main__":
             bili_subscribe = True
         except:
             bili_subscribe =  False
-        nowtime=time.time()
+        from datetime import datetime
+        from datetime import timedelta
+        from datetime import timezone
+
+        SHA_TZ = timezone(
+            timedelta(hours=8),
+            name='Asia/Shanghai',
+        )
+
+        # 协调世界时
+        utc_now = datetime.utcnow().replace(tzinfo=timezone.utc)
+        beijing_now = utc_now.astimezone(SHA_TZ)
+        print(beijing_now)
+        un_time = time.mktime(beijing_now.timetuple())
+        nowtime=int(un_time)
         #小刀网线报处理
         datas=get_message() 
         try:     
@@ -49,7 +63,7 @@ if __name__ == "__main__":
                 date=s.xpath("//time")[0].xpath('string(.)')        
                 timeArray = time.strptime(date+":00", "%Y-%m-%d %H:%M:%S")
                 timestamp = time.mktime(timeArray)
-                ac_time=nowtime-timestamp+28800
+                ac_time=nowtime-timestamp
                 #默认时间频率为两小时，单位秒即7200，可以根据自己需求更改。中国为东八区，比标准时间快8小时。
                 if ac_time<7200 :
                     sent_message(token=token,secret=secret,text=date+"\n"+info,title=title,picUrl=img,messageUrl=url)
@@ -64,7 +78,7 @@ if __name__ == "__main__":
             for i in mid_list:
                 video_list = get_video(i)
                 for j in video_list:
-                    ac_time = int(nowtime) - j['created'] +28800
+                    ac_time = int(nowtime) - j['created'] 
                     if ac_time<7200 :
                         sent_message(token=token,secret=secret,text=j['author']+"\n"+j['description'],title=j['title'],picUrl="https:{}".format(j['pic']),messageUrl="https://www.bilibili.com/video/{}".format(j['bvid']))
                         print("log:",j['created'],j['author'],j['title'],"\n")
