@@ -50,10 +50,10 @@ if __name__ == "__main__":
         # 协调世界时
         utc_now = datetime.utcnow().replace(tzinfo=timezone.utc)
         beijing_now = utc_now.astimezone(SHA_TZ)
-        print(beijing_now)
-        un_time = time.mktime(beijing_now.timetuple())
-        nowtime=int(un_time)
-        print(nowtime)
+        s=str(beijing_now)[:19]
+        timeArray = time.strptime(s, "%Y-%m-%d %H:%M:%S")
+        timestamp = time.mktime(timeArray)
+        nowtime=int(timestamp)
         #小刀网线报处理
         datas=get_message() 
         try:     
