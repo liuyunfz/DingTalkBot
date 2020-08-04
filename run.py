@@ -75,13 +75,12 @@ if __name__ == "__main__":
         #bilibili投稿处理
         if bili_subscribe == True :
             mid_list = mids.split(',')
-            print(mid_list)
             for i in mid_list:
                 video_list = get_video(i)
                 print(video_list)
                 for j in video_list:
                     ac_time = int(nowtime) - j['created'] 
-                    print(ac_time)
+                    print(nowtime,j['created'],ac_time)
                     if ac_time<7200 :
                         sent_message(token=token,secret=secret,text=j['author']+"\n"+j['description'],title=j['title'],picUrl="https:{}".format(j['pic']),messageUrl="https://www.bilibili.com/video/{}".format(j['bvid']))
                         print("log:",j['created'],j['author'],j['title'],"\n")
