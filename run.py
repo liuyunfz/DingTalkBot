@@ -30,47 +30,46 @@ def sent_message(token:str,secret:str,text:str,title:str,picUrl:str,messageUrl:s
 
 
 if __name__ == "__main__":
+    
+    token=sys.argv[1]
+    secret = sys.argv[2]
     try:
-        token=sys.argv[1]
-        secret = sys.argv[2]
-        try:
-            mids = sys.argv[3]
-            bili_subscribe = True
-        except:
-            bili_subscribe =  False
-        nowtime=time.time()
-        #小刀网线报处理
-        datas=get_message()      
-        for url,img,info in datas:
-            rsp=requests.get(url=url)
-            s=etree.HTML(rsp.text)
-            title=s.xpath("//h1[@class='article-title']")[0].text
-            date=s.xpath("//time")[0].xpath('string(.)')        
-            timeArray = time.strptime(date+":00", "%Y-%m-%d %H:%M:%S")
-            timestamp = time.mktime(timeArray)
-            ac_time=nowtime-timestamp+28800
-            #默认时间频率为两小时，单位秒即7200，可以根据自己需求更改。中国为东八区，比标准时间快8小时。
-            if ac_time<7200 :
-                sent_message(token=token,secret=secret,text=date+"\n"+info,title=title,picUrl=img,messageUrl=url)
-                print("log:",date,title,info,"\n")
-            else:
-                break
-        #bilibili投稿处理
-        if bili_subscribe == True :
-            mid_list = mids.split(',')
-            for i in mid_list:
-                video_list = get_video(i)
-                for j in video_list:
-                    ac_time = int(nowtime) - j['created'] +28800
-                    if ac_time<7200 :
-                        sent_message(token=token,secret=secret,text=j['author']+"\n"+j['description'],title=j['title'],picUrl="https:{}".format(j['pic']),messageUrl="https://www.bilibili.com/video/{}".format(j['bvid']))
-                        print("log:",j['created'],j['author'],j['title'],"\n")
-                    else:
-                        break
-        else:
-            pass
+        mids = sys.argv[3]
+        bili_subscribe = True
     except:
-        print('secret loss')
+        bili_subscribe =  False
+    nowtime=time.time()
+    #小刀网线报处理
+    datas=get_message()      
+    for url,img,info in datas:
+        rsp=requests.get(url=url)
+        s=etree.HTML(rsp.text)
+        title=s.xpath("//h1[@class='article-title']")[0].text
+        date=s.xpath("//time")[0].xpath('string(.)')        
+        timeArray = time.strptime(date+":00", "%Y-%m-%d %H:%M:%S")
+        timestamp = time.mktime(timeArray)
+        ac_time=nowtime-timestamp+28800
+        #默认时间频率为两小时，单位秒即7200，可以根据自己需求更改。中国为东八区，比标准时间快8小时。
+        if ac_time<7200 :
+            sent_message(token=token,secret=secret,text=date+"\n"+info,title=title,picUrl=img,messageUrl=url)
+            print("log:",date,title,info,"\n")
+        else:
+            break
+    #bilibili投稿处理
+    if bili_subscribe == True :
+        mid_list = mids.split(',')
+        for i in mid_list:
+            video_list = get_video(i)
+            for j in video_list:
+                ac_time = int(nowtime) - j['created'] +28800
+                if ac_time<7200 :
+                    sent_message(token=token,secret=secret,text=j['author']+"\n"+j['description'],title=j['title'],picUrl="https:{}".format(j['pic']),messageUrl="https://www.bilibili.com/video/{}".format(j['bvid']))
+                    print("log:",j['created'],j['author'],j['title'],"\n")
+                else:
+                    break
+    else:
+        pass
+
         
     
     
