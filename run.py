@@ -38,22 +38,15 @@ if __name__ == "__main__":
             bili_subscribe = True
         except:
             bili_subscribe =  False
-        from datetime import datetime
-        from datetime import timedelta
-        from datetime import timezone
-
-        SHA_TZ = timezone(
-            timedelta(hours=8),
-            name='Asia/Shanghai',
-        )
-
         # 协调世界时
+        from datetime import datetime
+        from datetime import timezone      
         utc_now = datetime.utcnow().replace(tzinfo=timezone.utc)
-        beijing_now = utc_now.astimezone(SHA_TZ)
-        s=str(beijing_now)[:19]
+        print(utc_now)
+        s=str(utc_now)[:19]
         timeArray = time.strptime(s, "%Y-%m-%d %H:%M:%S")
         timestamp = time.mktime(timeArray)
-        nowtime=int(timestamp)
+        utc_stp=int(timestamp)
         #小刀网线报处理
         datas=get_message() 
         try:     
@@ -64,7 +57,7 @@ if __name__ == "__main__":
                 date=s.xpath("//time")[0].xpath('string(.)')        
                 timeArray = time.strptime(date+":00", "%Y-%m-%d %H:%M:%S")
                 timestamp = time.mktime(timeArray)
-                ac_time=nowtime-timestamp
+                ac_time=utc_stp+28800-timestamp
                 #默认时间频率为两小时，单位秒即7200，可以根据自己需求更改。中国为东八区，比标准时间快8小时。
                 if ac_time<7200 :
                     sent_message(token=token,secret=secret,text=date+"\n"+info,title=title,picUrl=img,messageUrl=url)
@@ -80,8 +73,8 @@ if __name__ == "__main__":
                 video_list = get_video(i)
                 print(video_list)
                 for j in video_list:
-                    ac_time = nowtime - j['created'] 
-                    print(nowtime,j['created'],ac_time)
+                    ac_time = utc_stp+28800 - j['created'] 
+                    print(utc_stp+28800,j['created'],ac_time)
                     if ac_time<7200 :
                         sent_message(token=token,secret=secret,text=j['author']+"\n"+j['description'],title=j['title'],picUrl="https:{}".format(j['pic']),messageUrl="https://www.bilibili.com/video/{}".format(j['bvid']))
                         print("log:",j['created'],j['author'],j['title'],"\n")
