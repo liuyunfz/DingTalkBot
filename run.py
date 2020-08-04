@@ -53,6 +53,7 @@ if __name__ == "__main__":
         print(beijing_now)
         un_time = time.mktime(beijing_now.timetuple())
         nowtime=int(un_time)
+        print(nowtime)
         #小刀网线报处理
         datas=get_message() 
         try:     
@@ -79,7 +80,7 @@ if __name__ == "__main__":
                 video_list = get_video(i)
                 print(video_list)
                 for j in video_list:
-                    ac_time = int(nowtime) - j['created'] 
+                    ac_time = nowtime - j['created'] 
                     print(nowtime,j['created'],ac_time)
                     if ac_time<7200 :
                         sent_message(token=token,secret=secret,text=j['author']+"\n"+j['description'],title=j['title'],picUrl="https:{}".format(j['pic']),messageUrl="https://www.bilibili.com/video/{}".format(j['bvid']))
