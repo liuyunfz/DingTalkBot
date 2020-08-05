@@ -38,6 +38,7 @@ if __name__ == "__main__":
             bili_subscribe = True
         except:
             bili_subscribe =  False
+        '''
         from datetime import datetime
         # 协调世界时
         s=str(datetime.utcnow())[:19]
@@ -45,6 +46,8 @@ if __name__ == "__main__":
         timestamp = time.mktime(timeArray)
         print(int(timestamp))
         utc_stp=int(timestamp)
+        '''
+        utc_stp=int(time.time())
         #小刀网线报处理
         datas=get_message() 
         try:     
