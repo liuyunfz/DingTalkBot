@@ -38,14 +38,12 @@ if __name__ == "__main__":
             bili_subscribe = True
         except:
             bili_subscribe =  False
-        # 协调世界时
         from datetime import datetime
-        from datetime import timezone      
-        utc_now = datetime.utcnow().replace(tzinfo=timezone.utc)
-        print(utc_now)
-        s=str(utc_now)[:19]
+        # 协调世界时
+        s=str(datetime.utcnow())[:19]
         timeArray = time.strptime(s, "%Y-%m-%d %H:%M:%S")
         timestamp = time.mktime(timeArray)
+        print(int(timestamp))
         utc_stp=int(timestamp)
         #小刀网线报处理
         datas=get_message() 
