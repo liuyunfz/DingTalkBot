@@ -11,7 +11,7 @@
 3. 点击star开始执行Action（第一次star之后就会自动定时运行）
 ## 其他
 本项目的Action任务参考借鉴于[WakeLeanCloud](https://github.com/blogimg/WakeLeanCloud)  
-**本项目目前只实现了基于~~小刀网的线报推送~~与bilibili的up主投稿推送，监测间隔是两小时**。如果有其他想要实现的功能可以提个issue。  
+**本项目目前只实现了基于小刀网的线报推送与bilibili的up主投稿推送，监测间隔是两小时**。如果有其他想要实现的功能可以提个issue。  
 如果想要更改检测频率请自行修改yml里的corn表达式。~~需要注意的是中国的时区是UTC+8，也就是需要额外加上28800秒，这点在代码中也有体现。~~  
 执行日志目前仅在action任务中有显示，如果有需要的话可以像WakeLeanCloud一样在仓库添加log文件(提个issue吧)。
 ## 修改时间间隔
