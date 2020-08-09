@@ -47,7 +47,7 @@ if __name__ == "__main__":
                 date=s.xpath("//time")[0].xpath('string(.)')        
                 timeArray = time.strptime(date+":00", "%Y-%m-%d %H:%M:%S")
                 timestamp = time.mktime(timeArray)
-                ac_time=China_stp-timestamp
+                ac_time=China_stp-timestamp+28800
                 #默认时间频率为两小时，单位秒即7200，可以根据自己需求更改。
                 if ac_time<7200 :
                     sent_message(token=token,secret=secret,text=date+"\n"+info,title=title,picUrl=img,messageUrl=url)
