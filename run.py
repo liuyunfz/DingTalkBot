@@ -47,12 +47,11 @@ def sent_message(
 if __name__ == "__main__":
     from config import *
     try:
-        # token = sys.argv[1]
-        # secret = sys.argv[2]
-
+        token = sys.argv[1]
+        secret = sys.argv[2]
         try:
-            # mids = sys.argv[3]
-            mids = mids
+            mids = sys.argv[3]
+            # mids = mids
             bili_subscribe = True
         except BaseException:
             bili_subscribe = False
